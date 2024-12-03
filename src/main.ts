@@ -67,7 +67,7 @@ export class OzNeutralSDK {
     private partnershipsMap: Map<string, Partnership> = new Map()
     private usersMap: Map<string, User> = new Map()
 
-    private idGenerator = (): string => '#' + Math.floor(Math.random() * 0x1000000).toString(16).padStart(6, '0');
+    private idGenerator = (): string => Math.floor(Math.random() * 0x1000000).toString(16).padStart(6, '0');
 
     async addPersonToCompany(idCompany: string, email: string): Promise<ResponseUser> {
 

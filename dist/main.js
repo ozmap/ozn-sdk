@@ -5,7 +5,7 @@ export class OzNeutralSDK {
         this.companiesMap = new Map();
         this.partnershipsMap = new Map();
         this.usersMap = new Map();
-        this.idGenerator = () => '#' + Math.floor(Math.random() * 0x1000000).toString(16).padStart(6, '0');
+        this.idGenerator = () => Math.floor(Math.random() * 0x1000000).toString(16).padStart(6, '0');
     }
     async addPersonToCompany(idCompany, email) {
         if (!idCompany || !email)
