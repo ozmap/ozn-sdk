@@ -1,25 +1,45 @@
 {
-  "name": "ozn_sdk",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./dist/main.js",
-  "types": "./dist/main.d.js",
+  "name": "@ozmap/ozn-sdk",
+  "version": "0.0.1",
+  "description": "OZN SDK is a powerful tool for developers to build their own applications on top of OZN using TMForum pattern.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
     "test": "jest",
-    "prepublishOnly": "npm run build"
-  },
-  "keywords": [],
-  "author": "Nestor Brasileiro",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/jest": "^29.5.14",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.2.5",
-    "typescript": "^5.7.2"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ozmap/ozn-sdk.git"
+    "url": "git+ssh://git@github.com/ozmap/ozn-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ozmap/ozn-sdk/issues"
+  },
+  "homepage": "https://github.com/ozmap/ozn-sdk#readme",
+  "keywords": [
+    "ozneutral",
+    "tmf",
+    "sdk",
+    "devoz",
+    "ozmap",
+    "neutral"
+  ],
+  "author": "OZneutral Team <dev@ozneutral.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@types/jest": "^29.5.14",
+    "@typescript-eslint/eslint-plugin": "^8.26.0",
+    "@typescript-eslint/parser": "^8.26.0",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.0.2",
+    "eslint-plugin-prettier": "^5.2.3",
+    "globals": "^16.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.5.3",
+    "ts-jest": "^29.2.6",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.0",
+    "zod": "^3.24.2"
   }
 }

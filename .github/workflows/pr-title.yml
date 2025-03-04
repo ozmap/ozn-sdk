@@ -1,0 +1,52 @@
+name: Set PR Title from Jira
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  set-pr-info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Jira Title
+        id: get_jira_title
+        run: |
+          ISSUE_ID=$(echo "${{ github.event.pull_request.head.ref }}" | grep -oE '(OZN)-[0-9]+')
+          if [ -z "$ISSUE_ID" ]; then
+            echo "No Jira ID found in branch name."
+            exit 1
+          fi
+
+          RESPONSE=$(curl -u ${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_TOKEN }} \
+            -X GET \
+            -H "Accept: application/json" \
+            "https://ozmap.atlassian.net/rest/api/3/issue/$ISSUE_ID")
+
+          # Pega o título da issue
+          ISSUE_TITLE=$(echo $RESPONSE | jq -r '.fields.summary')
+          ISSUE_ID_FORMATTED=$(echo "$ISSUE_ID" | sed 's/-/ /')
+
+          echo "Issue Title: $ISSUE_TITLE"
+          echo "title=[$ISSUE_ID_FORMATTED] $ISSUE_TITLE" >> $GITHUB_OUTPUT
+
+      - name: Set PR Title and Assignee
+        run: |
+          PR_AUTHOR="${{ github.event.pull_request.user.login }}"
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          NEW_TITLE=$(echo "${{ steps.get_jira_title.outputs.title }}" | sed 's/"/\\"/g')
+
+          curl -X PATCH \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER \
+            -d "{\"title\":\"$NEW_TITLE\"}"
+
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/assignees \
+            -d "{\"assignees\":[\"$PR_AUTHOR\"]}"
