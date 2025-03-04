@@ -1,1 +1,3 @@
-console.log('oi');
+import * as types from './src/types';
+
+export default { ...types };

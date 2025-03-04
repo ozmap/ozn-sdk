@@ -1,24 +1,30 @@
 {
   "name": "ozn-sdk",
   "version": "0.0.1",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "build": "tsc"
   },
   "keywords": [],
-  "author": "",
+  "author": "OZneutral Team",
   "license": "ISC",
   "description": "",
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@types/jest": "^29.5.14",
     "@typescript-eslint/eslint-plugin": "^8.26.0",
     "@typescript-eslint/parser": "^8.26.0",
     "eslint": "^9.21.0",
     "eslint-config-prettier": "^10.0.2",
     "eslint-plugin-prettier": "^5.2.3",
     "globals": "^16.0.0",
+    "jest": "^29.7.0",
     "prettier": "^3.5.3",
+    "ts-jest": "^29.2.6",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.0"
+    "typescript-eslint": "^8.26.0",
+    "zod": "^3.24.2"
   }
 }
