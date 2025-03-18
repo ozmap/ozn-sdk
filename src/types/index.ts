@@ -1,11 +1,5 @@
-import * as resourcePoolManagement from './resource-pool-management';
-import * as geographicAddress from './geographic-address';
-import * as serviceQualification from './service-qualification';
-import * as shared from './shared';
-
-export default {
-    ...shared,
-    ...geographicAddress,
-    ...resourcePoolManagement,
-    ...serviceQualification,
-};
+export * from './resource-pool-management';
+export * from './geographic-address';
+export * from './service-qualification';
+export * from './shared';
+export * from './auth';
