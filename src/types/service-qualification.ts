@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { externalSystemsSchema, ResourceSpecificationSchema } from './shared';
+import { geographicAddressOutputSchema } from './geographic-address';
 
 export const serviceQualificationByIdInputSchema = z.object({
     serviceQualificationItem: z
@@ -37,7 +38,7 @@ const ResourceLocationSchema = z.object({
     name: z.string(),
     description: z.string().or(z.null()),
     parentLocation: z.string(),
-    address: ServiceQualificationAddressSchema,
+    address: ServiceQualificationAddressSchema.or(geographicAddressOutputSchema),
 });
 
 export const EligibilityUnavailabilityReasonSchema = z.object({
