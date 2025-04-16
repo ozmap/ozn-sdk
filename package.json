@@ -1,6 +1,6 @@
 {
   "name": "@ozmap/ozn-sdk",
-  "version": "0.0.1-VLD-1",
+  "version": "0.0.1-1021-5",
   "description": "OZN SDK is a powerful tool for developers to build their own applications on top of OZN using TMForum pattern.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -26,6 +26,9 @@
   ],
   "author": "OZneutral Team <dev@ozneutral.com>",
   "license": "MIT",
+  "dependencies": {
+    "zod": "^3.24.2"
+  },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@types/jest": "^29.5.14",
@@ -39,7 +42,6 @@
     "prettier": "^3.5.3",
     "ts-jest": "^29.2.6",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.0",
-    "zod": "^3.24.2"
+    "typescript-eslint": "^8.26.0"
   }
 }

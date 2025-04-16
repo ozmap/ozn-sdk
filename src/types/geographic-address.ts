@@ -15,10 +15,7 @@ export const geographicAddressInputSchema = z
             .optional(),
         lng: z
             .string()
-            .regex(
-                /^(\+|-)?(?:180(?:(?:\.0{1,20})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,20})?))$/,
-                'lng must to be between -180 and 180',
-            )
+            .regex(/^(\+|-)?(?:180(?:(?:\.0{1,20})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,20})?))$/, 'lng must to be between -180 and 180')
             .optional(),
     })
     .refine((input) => {
@@ -59,6 +56,15 @@ export const geographicAddressOutputSchema = z.object({
     geographicLocation: geographicLocationSchema,
     geographicSubAddress: z.string().optional(),
     externalSystems: z.array(externalSystemsSchema),
+    relatedAddress: z
+        .array(
+            z.object({
+                id: z.string(),
+                externalSystem: z.string(),
+                role: z.string(),
+            }),
+        )
+        .optional(),
 });
 
 export type GeographicAddressInput = z.infer<typeof geographicAddressInputSchema>;
