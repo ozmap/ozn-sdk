@@ -9,6 +9,7 @@ export const ConfirmOrderInputSchema = z.object({
         idOperator: z.string(),
         nameExternal: z.string(),
     }),
+    address: z.string(),
     idClient: z.string(),
     codeOrder: z.string(),
     idsExternals: z.object({
