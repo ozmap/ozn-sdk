@@ -1,6 +1,4 @@
 import { z } from 'zod';
-import { ResourcePoolManagementOutputSchema } from './resource-pool-management';
-
 
 export const ConfirmOrderInputSchema = z.object({
     port: z.object({
@@ -25,7 +23,9 @@ export const ConfirmOrderInputSchema = z.object({
     }),
 });
 
-export const ConfirmOrderOutputSchema =  ResourcePoolManagementOutputSchema
+export const ConfirmOrderOutputSchema =  z.object({
+    _id: z.string(),
+});
 
 export type ConfirmOrderInput = z.infer<typeof ConfirmOrderInputSchema>;
-export type ConfirmOrderOutput = z.infer<typeof ResourcePoolManagementOutputSchema>;
+export type ConfirmOrderOutput = z.infer<typeof ConfirmOrderOutputSchema>;
