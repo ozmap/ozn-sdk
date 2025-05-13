@@ -64,6 +64,7 @@ export const RelatedEntitySchema = z.object({
 const ServiceSchema = z.object({
     serviceCharacteristic: z.array(CharacteristicSchema),
     relatedEntity: z.array(RelatedEntitySchema),
+    iframeViability: z.boolean(),
 });
 
 const ServiceQualificationItemSchema = z.object({
