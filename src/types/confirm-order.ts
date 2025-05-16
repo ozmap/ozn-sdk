@@ -3,8 +3,6 @@ import { z } from 'zod';
 export const ConfirmOrderInputSchema = z.object({
     port: z.object({
         idExternal: z.string(),
-        idArea: z.string(),
-        idOperator: z.string(),
         nameExternal: z.string(),
     }),
     address: z.string(),
