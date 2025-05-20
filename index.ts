@@ -3,5 +3,5 @@ export * from './src/types/geographic-address';
 export * from './src/types/service-qualification';
 export * from './src/types/shared';
 export * from './src/types/confirm-order';
+export * from './src/types/service-ordering';
 export * as Auth from './src/types/auth';
-
