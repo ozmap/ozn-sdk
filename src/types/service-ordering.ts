@@ -14,6 +14,8 @@ const resourceSchema = z.array(z.object({
     })
 })).nullable().optional()
 
+const actionEnum = z.enum(['add', 'modify', 'delete', 'modifyPort']);
+
 export const ServiceOrderInputSchema = z.object({
     externalId: z.string(),
     category: z.string(),
@@ -34,7 +36,7 @@ export const ServiceOrderInputSchema = z.object({
         .array(
             z.object({
                 id: z.string(),
-                action: z.string(),
+                action: actionEnum,
                 serviceSpecification: z.array(
                     z.object({
                         id: z.string(),
@@ -91,7 +93,7 @@ export const ServiceOrderOutputSchema = z.object({
     orderItem: z.array(
         z.object({
             id: z.string(),
-            action: z.string(),
+            action: actionEnum,
             requestedCompletionDate: z.string().nullable(),
             state: z.string(),
             statusMessage: z.string().nullable(),
