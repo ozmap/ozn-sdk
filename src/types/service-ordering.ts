@@ -1,20 +1,40 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-const resourceSchema = z.array(z.object({
-    name: z.string(),
-    resource: z.object({
-        property: z.array(
-            z.object({
-                name: z.string(),
-                value: z.string(),
-            })
-        ),
-        component: z.array(z.any()).optional(),
-        resource: z.array(z.any()).optional(),
-    })
-})).nullable().optional()
+const resourceSchema = z
+    .array(
+        z.object({
+            name: z.string(),
+            resource: z.object({
+                property: z.array(
+                    z.object({
+                        name: z.string(),
+                        value: z.string(),
+                    }),
+                ),
+                component: z.array(z.any()).optional(),
+                resource: z.array(z.any()).optional(),
+            }),
+        }),
+    )
+    .nullable()
+    .optional();
 
 const actionEnum = z.enum(['add', 'modify', 'delete', 'modifyPort']);
+
+export const PortReplaceDetailEnum = z.enum([
+    'crossing',
+    'closerCTO',
+    'signalIssue',
+    'blockedAccess',
+    'fullCTO',
+    'operationalError',
+    'occupied',
+    'noSignal',
+    'attenuated',
+    'others',
+]);
+
+export type PortReplaceDetailEnum = z.infer<typeof PortReplaceDetailEnum>;
 
 export const ServiceOrderInputSchema = z.object({
     externalId: z.string(),
@@ -28,9 +48,9 @@ export const ServiceOrderInputSchema = z.object({
                 z.object({
                     name: z.string(),
                     value: z.string(),
-                })
+                }),
             ),
-        })
+        }),
     ),
     orderItem: z
         .array(
@@ -40,7 +60,7 @@ export const ServiceOrderInputSchema = z.object({
                 serviceSpecification: z.array(
                     z.object({
                         id: z.string(),
-                    })
+                    }),
                 ),
                 service: z
                     .array(
@@ -52,23 +72,18 @@ export const ServiceOrderInputSchema = z.object({
                                     z.object({
                                         name: z.string(),
                                         value: z.string(),
-                                        characteristic: z
-                                            .string()
-                                            .nullable()
-                                            .optional(),
-                                    })
+                                        characteristic: z.string().nullable().optional(),
+                                    }),
                                 )
                                 .optional(),
                             resource: resourceSchema,
-                        })
+                        }),
                     )
                     .max(1),
-            })
+            }),
         )
         .max(1),
 });
-
-
 
 export const ServiceOrderOutputSchema = z.object({
     id: z.string(),
@@ -86,9 +101,9 @@ export const ServiceOrderOutputSchema = z.object({
                 z.object({
                     name: z.string(),
                     value: z.string(),
-                })
+                }),
             ),
-        })
+        }),
     ),
     orderItem: z.array(
         z.object({
@@ -108,16 +123,18 @@ export const ServiceOrderOutputSchema = z.object({
                 name: z.string().nullable(),
                 description: z.string().nullable(),
                 place: z.array(z.any()),
-                serviceCharacteristic: z.array(z.object({
-                    name: z.string(),
-                    value: z.string(),
-                })),
+                serviceCharacteristic: z.array(
+                    z.object({
+                        name: z.string(),
+                        value: z.string(),
+                    }),
+                ),
                 serviceRelationship: z.array(z.any()),
                 relatedParty: z.any().nullable(),
                 component: z.array(z.any()).optional(),
                 resource: resourceSchema,
             }),
-        })
+        }),
     ),
 });
 
