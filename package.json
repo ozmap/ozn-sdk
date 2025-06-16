@@ -1,6 +1,6 @@
 {
   "name": "@ozmap/ozn-sdk",
-  "version": "0.0.1-1058-6",
+  "version": "0.0.1-1139-1",
   "description": "OZN SDK is a powerful tool for developers to build their own applications on top of OZN using TMForum pattern.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

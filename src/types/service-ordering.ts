@@ -21,6 +21,8 @@ const resourceSchema = z
 
 export const ServiceOrderActionEnum = z.enum(['add', 'modify', 'delete', 'modifyPort']);
 
+export const ServiceOrderStateEnum = z.enum(['Completed', 'Held', 'InProgress', 'Cancelled', 'Failed'])
+
 export const PortReplaceDetailEnum = z.enum([
     'crossing',
     'closerCTO',
@@ -91,7 +93,7 @@ export const ServiceOrderOutputSchema = z.object({
     description: z.string().nullable(),
     category: z.string(),
     note: z.string(),
-    state: z.string(),
+    state: ServiceOrderStateEnum,
     orderDate: z.string(),
     requesterCallback: z.string(),
     relatedParty: z.array(
@@ -110,7 +112,7 @@ export const ServiceOrderOutputSchema = z.object({
             id: z.string(),
             action: ServiceOrderActionEnum,
             requestedCompletionDate: z.string().nullable(),
-            state: z.string(),
+            state: ServiceOrderStateEnum,
             statusMessage: z.string().nullable(),
             serviceSpecification: z.object({
                 id: z.string(),
