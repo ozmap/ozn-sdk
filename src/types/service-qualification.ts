@@ -69,6 +69,7 @@ const ServiceSchema = z.object({
 
 const ServiceQualificationItemSchema = z.object({
     qualificationResult: z.string(),
+    codeOrder: z.string(),
     service: ServiceSchema,
     eligibilityUnavailabilityReason: z.array(EligibilityUnavailabilityReasonSchema),
 });
