@@ -64,10 +64,13 @@ export const RelatedEntitySchema = z.object({
 const ServiceSchema = z.object({
     serviceCharacteristic: z.array(CharacteristicSchema),
     relatedEntity: z.array(RelatedEntitySchema),
+    iframeViability: z.string().optional(),
 });
 
 const ServiceQualificationItemSchema = z.object({
     qualificationResult: z.string(),
+    codeOrder: z.string(),
+    clientName: z.string(),
     service: ServiceSchema,
     eligibilityUnavailabilityReason: z.array(EligibilityUnavailabilityReasonSchema),
 });
