@@ -9,6 +9,10 @@ export const geographicAddressInputSchema = z
         name: z.string().min(2).optional(),
         postcode: z.string().min(5).optional(),
         streetNr: z.string().optional(),
+        district: z.string().optional(), // <- bairro
+        stateOrProvince: z.string().optional(), // <- estado
+        geographicAddressComplement: z.string().optional(), // <- complement
+        city: z.string().optional(),
         lat: z
             .string()
             .regex(/^(\+|-)?(?:90(?:(?:\.0{1,20})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,20})?))$/, 'lat must to be between -90 and 90')
