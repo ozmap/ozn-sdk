@@ -64,7 +64,12 @@ jobs:
             DIST_TAG=latest
             PACKAGE_VERSION="$BASE_VERSION"
           elif [ "$REF_TYPE" = "tag" ]; then
-            # Tag push: if version is a semver pre-release (e.g. 1.2.3-rc.1) use 'rc', otherwise use 'latest'
+            # Tag push: ensure package.json version matches the pushed tag
+            if [ "$BASE_VERSION" != "$REF_NAME" ]; then
+              echo "Version mismatch: package.json has '$BASE_VERSION' but the pushed tag is '$REF_NAME'" >&2
+              exit 1
+            fi
+            # Semver pre-release versions (e.g. 1.2.3-rc.1) require at least one character after '-'
             if [[ "$BASE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-.+ ]]; then
               DIST_TAG=rc
             else
