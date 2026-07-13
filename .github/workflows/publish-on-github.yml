@@ -61,9 +61,9 @@ jobs:
           elif [ "$REF_NAME" = "master" ]; then
             DIST_TAG=latest
             PACKAGE_VERSION="$BASE_VERSION"
-          elif [ "$EVENT_NAME" = "push" ]; then
-            # Tag push: if version contains a pre-release identifier use 'rc', otherwise use 'latest'
-            if [[ "$BASE_VERSION" == *-* ]]; then
+          elif [ "$EVENT_NAME" = "push" ] && [ "$REF_NAME" != "develop" ] && [ "$REF_NAME" != "master" ]; then
+            # Tag push: if version is a semver pre-release (e.g. 1.2.3-rc.1) use 'rc', otherwise use 'latest'
+            if [[ "$BASE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-.+ ]]; then
               DIST_TAG=rc
             else
               DIST_TAG=latest
