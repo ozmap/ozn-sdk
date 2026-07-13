@@ -73,6 +73,7 @@ jobs:
               exit 1
             fi
             # Semver pre-release versions (e.g. 1.2.3-rc.1) require at least one character after '-'
+            # Note: =~ regex matching requires bash [[ ]] rather than POSIX [ ]
             if [[ "$BASE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-.+ ]]; then
               DIST_TAG=rc
             else
