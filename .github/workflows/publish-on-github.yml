@@ -45,7 +45,9 @@ jobs:
         id: publish_meta
         env:
           EVENT_NAME: ${{ github.event_name }}
+          REF_TYPE: ${{ github.ref_type }}
           REF_NAME: ${{ github.ref_name }}
+          # PR_NUMBER is only set for pull_request events (label 'deployToTest')
           PR_NUMBER: ${{ github.event.pull_request.number }}
           RUN_NUMBER: ${{ github.run_number }}
           RUN_ATTEMPT: ${{ github.run_attempt }}
@@ -55,12 +57,31 @@ jobs:
           if [ "$EVENT_NAME" = "pull_request" ]; then
             DIST_TAG=test
             PACKAGE_VERSION="${BASE_VERSION}-pr.${PR_NUMBER}.${RUN_NUMBER}.${RUN_ATTEMPT}"
+            NEEDS_STAMP=true
           elif [ "$REF_NAME" = "develop" ]; then
             DIST_TAG=beta
             PACKAGE_VERSION="${BASE_VERSION}-beta.${RUN_NUMBER}.${RUN_ATTEMPT}"
+            NEEDS_STAMP=true
           elif [ "$REF_NAME" = "master" ]; then
             DIST_TAG=latest
             PACKAGE_VERSION="$BASE_VERSION"
+            NEEDS_STAMP=false
+          elif [ "$REF_TYPE" = "tag" ]; then
+            # Tag push: ensure package.json version matches the pushed tag
+            if [ "$BASE_VERSION" != "$REF_NAME" ]; then
+              echo "Version mismatch: package.json has '$BASE_VERSION' but the pushed tag is '$REF_NAME'" >&2
+              exit 1
+            fi
+            # Semver pre-release versions (e.g. 1.2.3-rc.1) require at least one character after '-'
+            # Note: =~ regex matching requires bash [[ ]] rather than POSIX [ ]
+            if [[ "$BASE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-.+ ]]; then
+              DIST_TAG=rc
+            else
+              DIST_TAG=latest
+            fi
+            PACKAGE_VERSION="$BASE_VERSION"
+            # package.json already has the correct version; stamping would be a no-op and fails
+            NEEDS_STAMP=false
           else
             echo "Unsupported publish source: $EVENT_NAME / $REF_NAME" >&2
             exit 1
@@ -68,8 +89,9 @@ jobs:
           echo "dist_tag=$DIST_TAG" >> "$GITHUB_OUTPUT"
           echo "package_name=$PACKAGE_NAME" >> "$GITHUB_OUTPUT"
           echo "package_version=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "needs_stamp=$NEEDS_STAMP" >> "$GITHUB_OUTPUT"
       - name: Stamp package version for pre-release channels
-        if: steps.publish_meta.outputs.dist_tag != 'latest'
+        if: steps.publish_meta.outputs.needs_stamp == 'true'
         run: npm version "${{ steps.publish_meta.outputs.package_version }}" --no-git-tag-version
 
       - name: Check whether stable version already exists
