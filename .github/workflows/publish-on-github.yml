@@ -26,24 +26,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 8
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: pnpm
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
           registry-url: https://npm.pkg.github.com
           scope: '@ozmap'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
       - name: Build package
-        run: pnpm build
+        run: npm run build
 
       - name: Resolve publish channel and version
         id: publish_meta

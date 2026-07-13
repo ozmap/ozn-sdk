@@ -86,6 +86,8 @@ describe('Service Qualification Schemas', () => {
             serviceQualificationItem: [
                 {
                     qualificationResult: 'qualified',
+                    codeOrder: 'order-code',
+                    clientName: 'client-name',
                     service: {
                         serviceCharacteristic: [{ name: 'name', valueType: 'string', value: 'value' }],
                         relatedEntity: [
