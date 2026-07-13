@@ -45,7 +45,9 @@ jobs:
         id: publish_meta
         env:
           EVENT_NAME: ${{ github.event_name }}
+          REF_TYPE: ${{ github.ref_type }}
           REF_NAME: ${{ github.ref_name }}
+          # PR_NUMBER is only set for pull_request events (label 'deployToTest')
           PR_NUMBER: ${{ github.event.pull_request.number }}
           RUN_NUMBER: ${{ github.run_number }}
           RUN_ATTEMPT: ${{ github.run_attempt }}
@@ -61,7 +63,7 @@ jobs:
           elif [ "$REF_NAME" = "master" ]; then
             DIST_TAG=latest
             PACKAGE_VERSION="$BASE_VERSION"
-          elif [ "$EVENT_NAME" = "push" ] && [ "$REF_NAME" != "develop" ] && [ "$REF_NAME" != "master" ]; then
+          elif [ "$REF_TYPE" = "tag" ]; then
             # Tag push: if version is a semver pre-release (e.g. 1.2.3-rc.1) use 'rc', otherwise use 'latest'
             if [[ "$BASE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-.+ ]]; then
               DIST_TAG=rc
