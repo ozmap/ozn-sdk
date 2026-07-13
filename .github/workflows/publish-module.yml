@@ -12,12 +12,14 @@ jobs:
       - name: 'cat package.json'
         run: cat ./package.json
       - name: install node v22
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           registry-url: 'https://registry.npmjs.org'
           node-version: 22
-      - name: npm install
-        run: npm install
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: npm ci
+        run: npm ci
       - name: tsc
         run: npm run build
       - name: publish

@@ -75,5 +75,14 @@ export const ResourcePoolManagementOutputSchema = z.object({
     reservationItem: z.array(ReservationItemSchemaOutput),
 });
 
+
+export const CancelReservationSchema = z.object({
+    relatedParty: RelatedPartySchema,
+    reservationItem: z.object({
+        reservationState: z.string(),
+    }),
+});
+
+export type CancelReservationInput = z.infer<typeof CancelReservationSchema>;
 export type ResourcePoolManagementInput = z.infer<typeof resourcePoolManagementInputSchema>;
 export type ResourcePoolManagementOutput = z.infer<typeof ResourcePoolManagementOutputSchema>;
